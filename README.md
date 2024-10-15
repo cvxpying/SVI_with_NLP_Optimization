@@ -113,7 +113,7 @@ $$
 
 ![filtered vol smile_call](https://github.com/user-attachments/assets/9fc5aec0-3071-4d0e-8c03-3cd76f6a9d12)
 The goal is to optimize this volatility smile using the SVI model.
-For details on data acquisition and preprocessing, please refer to the README.md in the 'data' folder.
+For details on data acquisition and preprocessing, please refer to the README.md in the 'data' folder(https://github.com/cvxpying/SVI_with_NLP_Optimization/blob/master/data/README.md).
 
 
 #### 3.3.1 Objective Function in the SVI Model
@@ -274,15 +274,7 @@ However, these attempts did not yield good results, so method c was tried.
 2. Some parts were still not properly fitted.
 3. It appeared to be better optimized compared to other methods.
 
-![L-BFGS-B (c) (최종)](https://github.com/user-attachments/assets/4bf52fd3-95b5-4686-8a53-a835b258ab6e)
-
-
 Overall, the fitting results showed a convex shape, excluding some expiration date option trading data.
 
-### 5.3 Parameter
-
-Below are the optimized parameter values for each expiration date derived from the L-BFGS-B optimization.
-
-![Image10](#)
 
 
