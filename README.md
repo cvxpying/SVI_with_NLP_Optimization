@@ -298,7 +298,7 @@ Despite the higher volatility on August 5, the RMSE is approximately 0.24, and t
 ### 6.3 Performance Analysis: Objective Function Value
 By iteratively optimizing, we can analyze the performance by checking how much the initial objective function value, \( \sum_{i=1}^{N} (\hat{w}(k_i) - w(k_i))^2 \), has decreased. The larger the decrease, the better the optimization performance.
 
-0000000000000000
+![123415155](https://github.com/user-attachments/assets/f237532e-dbad-4f85-93f4-9d1c8f9351b5)
 
 **Analysis 1: Orange Line Below Blue Line**  
 The blue dashed line represents the initial objective function value, and the orange solid line represents the objective function value after iterative optimization. For notable expiration date data (August 5 and August 16), the post-optimization objective function value is significantly lower than the pre-optimization value.
@@ -306,18 +306,20 @@ The blue dashed line represents the initial objective function value, and the or
 **Analysis 2: What about Other Dates?**  
 Apart from the prominent expiration dates, the changes in objective function values for other expiration dates are not easily discernible. We visualize the data again, excluding the data for these two expiration dates.
 
-0000000000000000
+![image](https://github.com/user-attachments/assets/1e93aff2-76ba-4027-94f9-b83c7b4e3c0c)
+
 After excluding the notable expiration dates (2024-08-05, 2024-08-16), we examined the decrease in the objective function values for the remaining expiration date option trade data. The figure compares the pre- and post-optimization objective function values.
 
 Below is a visualization that highlights only the decrease in the objective function values.
 
-0000000000000000
+![image](https://github.com/user-attachments/assets/950ae4da-28e6-4140-bf28-d384938969fe)
 The optimization process clearly reduced the objective function values. First, the absence of negative decreases indicates that no data points experienced an increase in the objective function value (i.e., no reverse optimization effect). Furthermore, even for option trades with objective function values close to zero, we can observe a slight decrease in the values.
 
 ### 6.4 Butterfly Arbitrage-Free Condition
 We check whether the optimization of the volatility smile resulted in an arbitrage-free scenario for options. This study verifies the presence or absence of butterfly arbitrage as discussed in the literature review.
 
-0000000000000000
+![image](https://github.com/user-attachments/assets/21606161-c8b2-4e23-8f36-ab91c4c78267)
+![image](https://github.com/user-attachments/assets/43322b77-b278-4c69-b179-561e329c78d2)
 
 **Analysis 1: Intuitive Analysis**  
 In the end, no butterfly arbitrage was observed in any of the expiration date option data analyzed. This indicates that the volatility smile, as estimated by the SVI model, was convexly optimized for all log strike prices.
