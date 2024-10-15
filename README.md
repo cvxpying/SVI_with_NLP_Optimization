@@ -188,3 +188,8 @@ This equation redefines the Lagrangian function, where the primal variables \(a\
 #### 4.5.2 Strong Duality and the Dual Gap
 
 **Strong duality** occurs when the convexity condition is satisfied, meaning the optimal solutions of the primal and dual problems coincide. In other words, the optimal value of the objective function for both the primal and dual problems will be equal. When strong duality holds, the **dual gap** is zero. The dual gap is the difference between the optimal objective function values of the primal and dual problems. By verifying the duality gap in the redefined objective function in section 3.4.6.1, the optimization can be confirmed as successful when the primal and dual solutions match.
+
+
+## V. Result
+
+
