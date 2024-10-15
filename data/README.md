@@ -27,6 +27,8 @@ The data, including these elements, was obtained from one of the major option ex
 - `implied_volatility`
 - Option Greeks: `delta`, `gamma`, `theta`, `vega`, `rho`
 
+![image](https://github.com/user-attachments/assets/6618b3ed-0bfb-4125-b21f-c052e0cecfab)
+![image](https://github.com/user-attachments/assets/8c5f36f2-d8e3-403e-b4a2-771651347386)
 
 
 As indicated, the dataset includes crucial information such as expiration dates, strike prices, trade volume, bid/ask prices for both options and underlying assets, underlying asset prices, implied volatility, and Greeks. These elements are valuable for analyzing the factors influencing option price movements.
@@ -79,3 +81,4 @@ Visualized below are the filtered volatility smiles for call options, following 
 
 
 
+![filtered vol smile_call](https://github.com/user-attachments/assets/3ba6745c-742d-48be-a214-248bf369115e)
