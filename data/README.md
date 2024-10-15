@@ -82,3 +82,11 @@ Visualized below are the filtered volatility smiles for call options, following 
 
 
 ![filtered vol smile_call](https://github.com/user-attachments/assets/3ba6745c-742d-48be-a214-248bf369115e)
+
+
+
+#### Filtered Volatility Smile (Put Options)
+
+![filtered vol smile_put](https://github.com/user-attachments/assets/479e36b5-1578-42df-9b04-357c6f329a17)
+
+
