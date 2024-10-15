@@ -1,7 +1,7 @@
 # SVI_with_NLP_Optimization
 
 ## 0. Special Thanks
-This study was inspired by research conducted based on **<A New Simple Approach for Constructing Implied Volatility Surfaces>** by Peter Carr and Liuren Wu.
+This study was inspired by research conducted based on **A New Simple Approach for Constructing Implied Volatility Surfaces** by Peter Carr and Liuren Wu.
 
 
 ## I. Research Background and Objectives
