@@ -262,7 +262,7 @@ b. **Additional Optimization Purpose**: To prevent overfitting in the SVI model,
 
 However, these attempts did not yield good results, so method c was tried.
 
-![image](https://github.com/user-attachments/assets/28865819-4cea-419c-a035-f2e7498735b5)
+![L-BFGS-B (c) (최종)](https://github.com/user-attachments/assets/4bf52fd3-95b5-4686-8a53-a835b258ab6e)
 
 **Additional Optimization Purpose**:
 
@@ -277,4 +277,51 @@ However, these attempts did not yield good results, so method c was tried.
 Overall, the fitting results showed a convex shape, excluding some expiration date option trading data.
 
 
+## VI. Result
+
+### 6.1 Parameter
+The following are the optimized parameter values for each expiration date derived from the L-BFGS-B optimization.
+
+![image](https://github.com/user-attachments/assets/f85dfd68-05ff-470a-b14f-ad024ccc8c05)
+
+### 6.2 Performance Analysis: RMSE
+RMSE (Root Mean Squared Error) is a metric that measures the difference between the predicted model and the actual values. A lower RMSE indicates that the model's predictions are closer to the actual values, implying better optimization performance.
+
+![image](https://github.com/user-attachments/assets/3b266aeb-3541-40dd-9c52-f5e855eb1f73)
+
+**Analysis 1: High RMSE on August 5**  
+The data used in this study consists of option trades made on August 5. The market volatility for this expiration date was much higher than for other dates, which may result in a higher loss value for the data. Additionally, with a higher trade volume, more data points are included, which can further increase the observed loss for this date.
+
+**Analysis 2: Overall Low RMSE**  
+Despite the higher volatility on August 5, the RMSE is approximately 0.24, and the RMSE for option trades with other expiration dates is significantly lower. This demonstrates that the overall optimization was successful.
+
+### 6.3 Performance Analysis: Objective Function Value
+By iteratively optimizing, we can analyze the performance by checking how much the initial objective function value, \( \sum_{i=1}^{N} (\hat{w}(k_i) - w(k_i))^2 \), has decreased. The larger the decrease, the better the optimization performance.
+
+0000000000000000
+
+**Analysis 1: Orange Line Below Blue Line**  
+The blue dashed line represents the initial objective function value, and the orange solid line represents the objective function value after iterative optimization. For notable expiration date data (August 5 and August 16), the post-optimization objective function value is significantly lower than the pre-optimization value.
+
+**Analysis 2: What about Other Dates?**  
+Apart from the prominent expiration dates, the changes in objective function values for other expiration dates are not easily discernible. We visualize the data again, excluding the data for these two expiration dates.
+
+0000000000000000
+After excluding the notable expiration dates (2024-08-05, 2024-08-16), we examined the decrease in the objective function values for the remaining expiration date option trade data. The figure compares the pre- and post-optimization objective function values.
+
+Below is a visualization that highlights only the decrease in the objective function values.
+
+0000000000000000
+The optimization process clearly reduced the objective function values. First, the absence of negative decreases indicates that no data points experienced an increase in the objective function value (i.e., no reverse optimization effect). Furthermore, even for option trades with objective function values close to zero, we can observe a slight decrease in the values.
+
+### 6.4 Butterfly Arbitrage-Free Condition
+We check whether the optimization of the volatility smile resulted in an arbitrage-free scenario for options. This study verifies the presence or absence of butterfly arbitrage as discussed in the literature review.
+
+0000000000000000
+
+**Analysis 1: Intuitive Analysis**  
+In the end, no butterfly arbitrage was observed in any of the expiration date option data analyzed. This indicates that the volatility smile, as estimated by the SVI model, was convexly optimized for all log strike prices.
+
+**Analysis 2: Mathematical Analysis**  
+Considering the SVI model's equation, this means that the second derivative of \( w(k) \) is positive for all values of \( k \). In other words, the differentiability shows that the volatility smile is continuous and smooth across all data points, without any sharp peaks, and the positive derivative confirms that the smile is convex.
 
