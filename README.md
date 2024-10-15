@@ -41,6 +41,8 @@ This study was inspired by research conducted based on **'A New Simple Approach 
 2.2.1. **Parameter Importance**:  
    The initial parameter setup in the SVI model significantly influences its ability to fit the volatility surface and prevent arbitrage. The parameters a, b, ρ, m, and σ must be properly constrained to ensure realistic and stable volatility surface formation.
 
+![image](https://github.com/user-attachments/assets/add6c0bb-2c02-494d-9e1e-167a65ff6cfd)
+
 2.2.2. **Parameter Range**:  
    To achieve effective model calibration, the following parameter constraints are used:  
    
@@ -109,6 +111,11 @@ $$
 
 ### 3.3 SVI Model Optimization via Non-Linear Programming (NLP)
 
+![filtered vol smile_call](https://github.com/user-attachments/assets/9fc5aec0-3071-4d0e-8c03-3cd76f6a9d12)
+The goal is to optimize this volatility smile using the SVI model.
+For details on data acquisition and preprocessing, please refer to the README.md in the 'data' folder.
+
+
 #### 3.3.1 Objective Function in the SVI Model
 
 The objective function, along with constraints, is classified as a non-linear programming (NLP) problem. In the SVI model, the function that represents the volatility smile is defined as follows:
@@ -120,7 +127,7 @@ $$
 This function models the implied volatility curve based on several parameters to fit the volatility smile. The term \( \sqrt{(k - m)^2 + \sigma^2} \) indicates how volatility changes with the strike price, exhibiting a non-linear relationship. Therefore, optimizing the SVI model involves solving a non-linear optimization problem to ensure that the volatility smile is properly fitted.
 
 
-## IV. Problem Solving (Optimization)
+## IV. Project Methodology
 
 ### 4.1 Definition of the Primal Problem
 
@@ -190,6 +197,92 @@ This equation redefines the Lagrangian function, where the primal variables \(a\
 **Strong duality** occurs when the convexity condition is satisfied, meaning the optimal solutions of the primal and dual problems coincide. In other words, the optimal value of the objective function for both the primal and dual problems will be equal. When strong duality holds, the **dual gap** is zero. The dual gap is the difference between the optimal objective function values of the primal and dual problems. By verifying the duality gap in the redefined objective function in section 3.4.6.1, the optimization can be confirmed as successful when the primal and dual solutions match.
 
 
-## V. Result
+## V. Optimization
+
+### 5.1. Gradient Descent
+The first optimization method used was gradient descent. Gradient descent is an optimization algorithm that adjusts parameter values in the direction where the objective function decreases, guiding the function toward a global optimum. However, this method has limitations such as the likelihood of getting stuck in a local optimum based on the chosen initial values and the challenge of setting an appropriate step size. After optimizing with the following settings, further optimization was performed by adjusting the settings:
+
+- Learning rate: 0.001  
+- Iterations: 5000  
+- Tolerance: 1e-6  
+- Epsilon for numerical stability: 1e-8  
+
+After classifying the option trading data by expiration dates, gradient descent was applied to optimize the volatility smile. The results are shown below.
+
+![image](https://github.com/user-attachments/assets/6bfd15c5-911f-4875-a4f5-db31f497c1e5)
+
+The three key findings are as follows:
+
+1. The volatility smile could not be derived in some cases.
+2. The derived volatility smile did not meet convexity conditions.
+3. Proper fitting (regression) was not achieved.
+
+After running 5000 iterations again, the optimization was re-evaluated.
+
+![image](https://github.com/user-attachments/assets/4180c17b-dc95-46e2-b112-85f095c19d0c)
+
+1. The results were almost identical to the previous optimization.
+2. For some expiration dates (Expiration: 2024-08-21), convexity conditions were satisfied.
+
+Based on these results, it was concluded that a different algorithm should be tested instead of adjusting the settings further.
+
+### 5.2 L-BFGS-B
+
+The L-BFGS-B algorithm was effective for the following reasons:
+
+- **Limited-memory**: Minimizes memory usage while handling large-scale problems. Effective when the parameter space is large or there are many data points.
+- **BFGS**: Uses approximations rather than calculating second-order derivatives directly, converging more efficiently than general gradient descent algorithms.
+- **Box Constraints**: Directly controls variable ranges, preventing improper values from being generated during the optimization process. Boundary conditions can be applied to optimization variables.
+
+Given that the data being used is very large, and the number of parameters being searched is five (in a 5-dimensional space), the L-BFGS-B algorithm was deemed appropriate for optimization.
+
+![image](https://github.com/user-attachments/assets/dc9107d4-e314-41f9-a6b6-3cd6fafd1e2c)
+![image](https://github.com/user-attachments/assets/60abdb82-461f-43ec-9914-280b03ea6e65)
+
+*The blue dots represent the actual volatility for the trading data. The same arrangement was observed in both algorithms. Considering this, it can be visually confirmed that the L-BFGS-B algorithm fits the data points much better than gradient descent.*
+
+![image](https://github.com/user-attachments/assets/cb1cba14-c034-4560-a77f-b1a359cbcb61)
+
+1. The L-BFGS-B algorithm performed better than gradient descent (visually noticeable).
+2. For some expiration dates (Expiration: 2024-08-16), overfitting appeared to be applied excessively.
+
+Further optimization was conducted using the following three methods:
+
+a. Applying convexity constraints for all log strikes.  
+b. Smoothing the curve.  
+c. Setting a lower bound for second derivatives.
+
+a. **Additional Optimization Purpose**: Instead of using all possible values of \(k\) to check convexity, sample points of \(k\) were generated at regular intervals to verify convexity.
+
+![image](https://github.com/user-attachments/assets/d9edbec4-7441-4ff3-af23-5fc7ddbdbce5)
+
+b. **Additional Optimization Purpose**: To prevent overfitting in the SVI model, a smoothing term was added to the objective function, reducing model variance and strengthening convexity.
+
+![image](https://github.com/user-attachments/assets/abbe9691-a9bd-47e1-a3fd-a57bca528224)
+
+However, these attempts did not yield good results, so method c was tried.
+
+![image](https://github.com/user-attachments/assets/28865819-4cea-419c-a035-f2e7498735b5)
+
+**Additional Optimization Purpose**:
+
+1. Ensuring the curve takes on a fully convex shape by setting the second derivative not just greater than zero, but above a small value \( \epsilon \).
+2. Ensuring the curve does not become too flat and consistently remains convex.
+
+**Analysis**:
+1. The convexity of the volatility smile was generally satisfied.
+2. Some parts were still not properly fitted.
+3. It appeared to be better optimized compared to other methods.
+
+![L-BFGS-B (c) (최종)](https://github.com/user-attachments/assets/4bf52fd3-95b5-4686-8a53-a835b258ab6e)
+
+
+Overall, the fitting results showed a convex shape, excluding some expiration date option trading data.
+
+### 5.3 Parameter
+
+Below are the optimized parameter values for each expiration date derived from the L-BFGS-B optimization.
+
+![Image10](#)
 
 
